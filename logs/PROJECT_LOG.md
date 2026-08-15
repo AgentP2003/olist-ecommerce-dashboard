@@ -169,7 +169,7 @@ dashboard/
 
 **Files created:**
 - **`.gitignore`** — excludes `data/raw/*.csv`, `db/*.db`, Python cache/venv files, `.streamlit/secrets.toml`, OS cruft. Explicitly keeps `data/raw/.gitkeep` and `db/.gitkeep` so the folder structure stays visible in the repo. `data/processed/*.parquet` and all `logs/*.log` files ARE committed (small, and useful portfolio/validation evidence).
-- **`README.md`** — full project README: architecture diagram, repo structure, dataset info, local setup instructions (clone → download CSVs → run 3 pipeline scripts → launch dashboard), tech stack, link to PROJECT_LOG.md, placeholder for the live Streamlit Cloud URL (to fill in after Stage 6)
+- **`README.md`** — full project README: architecture diagram, repo structure, dataset info, local setup instructions (clone → download CSVs → run 3 pipeline scripts → launch dashboard), tech stack, link to PROJECT_LOG.md, live Streamlit Cloud URL (added in Stage 6)
 - **`data/raw/.gitkeep`**, **`db/.gitkeep`** — placeholders so gitignored-but-empty folders still exist in the repo
 
 **Git setup:**
@@ -187,4 +187,22 @@ git branch -M main
 git push -u origin main
 ```
 
-## Stage 6: Deployment (Streamlit Cloud) — ⏳ NOT STARTED
+## Stage 6: Deployment (Streamlit Cloud) — ✅ DONE
+
+**Date:** 2026-08-16
+
+**Repo:** https://github.com/AgentP2003/olist-ecommerce-dashboard
+**Live app:** https://olist-ecommerce-dashboardbranchmain-tnnk8f4rhzfstnr2cj3oes.streamlit.app
+
+**What was done:**
+- Pushed local repo to GitHub (`git remote add origin` → `git push -u origin main`), first push authenticated via browser (Git Credential Manager)
+- Deployed on Streamlit Community Cloud: repo `AgentP2003/olist-ecommerce-dashboard`, branch `main`, Main file path `dashboard/app.py`
+- Verified all 4 pages (Home, Sales & Revenue, Delivery Performance, Customer Experience) render correctly on the live URL, matching local testing
+- Confirmed local reproducibility end-to-end: `data/raw/*.csv` (9 files) + `db/olist.db` + all pipeline scripts are present locally, so the full pipeline (raw CSV → SQLite → SQL views → Parquet → dashboard) can be rebuilt from scratch at any time. `db/olist.db` itself is fully derived/regenerable from raw CSVs via `scripts/02_load_to_sqlite.py` + `scripts/03_run_sql.py` — not something that needs separate backup.
+- Updated `README.md` with the live dashboard link, live badge, and correct clone URL (previously placeholders)
+
+**Issues hit during deployment (for reference):**
+- Local `streamlit` command not recognized on Windows (PATH issue) — worked around with `python -m streamlit run app.py` instead of the bare `streamlit` command
+- First Streamlit Cloud app-creation form submission had fields mis-filled (repo/branch/path values landed in the wrong boxes) — resolved by clearing and re-entering each field individually
+
+**Project status: all 6 stages complete.** Full pipeline is live, reproducible, version-controlled, and documented (technical + non-technical write-ups also produced separately for portfolio use).
