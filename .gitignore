@@ -1,0 +1,29 @@
+# ---- Raw & intermediate data (regenerate locally, never pushed) ----
+data/raw/*.csv
+db/*.db
+db/*.db-journal
+
+# Keep the folder structure visible in git even though contents are ignored
+!data/raw/.gitkeep
+!db/.gitkeep
+
+# data/processed/ IS committed (small Parquet files the dashboard needs)
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---- Streamlit ----
+.streamlit/secrets.toml
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
