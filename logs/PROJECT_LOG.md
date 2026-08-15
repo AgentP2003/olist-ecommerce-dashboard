@@ -157,7 +157,34 @@ dashboard/
 - Best on-time state: RO (97.1%) · worst: AL (76.1%) · avg delivery time 18.8 days
 - Review score falls from 4.32 → 1.70 as delivery goes from 8+ days early to 8+ days late
 
-## Stage 5: GitHub Structure — ⏳ NOT STARTED
-**Note:** `data/raw/` (CSVs) and `db/olist.db` do NOT need to be committed to GitHub — the deployed app only reads from `data/processed/*.parquet`. Plan to `.gitignore` both, or keep them in the repo for portfolio transparency — decide during Stage 5.
+## Stage 5: GitHub Structure — ✅ DONE
+
+**Date:** 2026-08-16
+
+**Decisions confirmed with user:**
+- Exclude `data/raw/*.csv` and `db/olist.db` from git (kept locally, gitignored for GitHub) — repo stays lean, only code + small Parquet outputs are pushed
+- Whole `olist_project/` is the repo root — single cohesive repo showing the full SQL → Python → dashboard pipeline
+
+**Important fix found via Streamlit Cloud docs:** `.streamlit/config.toml` must live at the **repo root**, not next to the app entrypoint, whenever the entrypoint file is in a subdirectory (Community Cloud only recognizes one config file, at the root). Moved `dashboard/.streamlit/config.toml` → `.streamlit/config.toml` at project root. Also moved `requirements.txt` to the project root (Streamlit Cloud checks entrypoint directory first, then root — root is the cleaner convention for this repo layout). Re-verified the app still runs correctly after both moves.
+
+**Files created:**
+- **`.gitignore`** — excludes `data/raw/*.csv`, `db/*.db`, Python cache/venv files, `.streamlit/secrets.toml`, OS cruft. Explicitly keeps `data/raw/.gitkeep` and `db/.gitkeep` so the folder structure stays visible in the repo. `data/processed/*.parquet` and all `logs/*.log` files ARE committed (small, and useful portfolio/validation evidence).
+- **`README.md`** — full project README: architecture diagram, repo structure, dataset info, local setup instructions (clone → download CSVs → run 3 pipeline scripts → launch dashboard), tech stack, link to PROJECT_LOG.md, placeholder for the live Streamlit Cloud URL (to fill in after Stage 6)
+- **`data/raw/.gitkeep`**, **`db/.gitkeep`** — placeholders so gitignored-but-empty folders still exist in the repo
+
+**Git setup:**
+- Ran `git init`, staged all files, confirmed via `git check-ignore -v` that raw CSVs and `olist.db` are correctly excluded while remaining untouched on local disk
+- First commit made: 37 files tracked, **`.git` folder is only 520KB** (vs. the ~91MB it would be with raw data included)
+
+**What's committed (37 files):** `.gitignore`, `README.md`, `requirements.txt`, `.streamlit/config.toml`, all 4 `sql/*.sql` scripts, all 4 `scripts/*.py` pipeline scripts, all 12 `data/processed/*.parquet` files, all dashboard code (`app.py`, `data_loader.py`, `style.py`, 3 pages), all `logs/*` (including `PROJECT_LOG.md`), and the 2 `.gitkeep` placeholders.
+
+**What's local-only (not in git):** `data/raw/*.csv` (9 files, ~120MB), `db/olist.db` (~112MB).
+
+**Next step for the user:** create a new GitHub repo, then from inside `olist_project/`:
+```bash
+git remote add origin <your-github-repo-url>
+git branch -M main
+git push -u origin main
+```
 
 ## Stage 6: Deployment (Streamlit Cloud) — ⏳ NOT STARTED
