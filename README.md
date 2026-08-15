@@ -2,11 +2,12 @@
 
 An end-to-end data analytics project: raw e-commerce data → SQL transformation → Python processing → interactive Streamlit dashboard, deployed live on Streamlit Community Cloud.
 
-**🔗 Live dashboard:** _add your Streamlit Cloud URL here after deployment_
+**🔗 Live dashboard:** [olist-ecommerce-dashboard.streamlit.app](https://olist-ecommerce-dashboardbranchmain-tnnk8f4rhzfstnr2cj3oes.streamlit.app)
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![SQL](https://img.shields.io/badge/SQL-SQLite-lightgrey)
 ![Streamlit](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B)
+![Status](https://img.shields.io/badge/Status-Live-brightgreen)
 
 ---
 
@@ -78,7 +79,7 @@ Raw data and the SQLite database are **not** included in this repo (kept out via
 
 1. **Clone the repo**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/AgentP2003/olist-ecommerce-dashboard.git
    cd olist_project
    ```
 
